@@ -1,0 +1,228 @@
+{
+	"info": {
+		"_postman_id": "0ff0d6a8-aa77-4994-8de5-450e8a5bd818",
+		"name": "ListaExamBot",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "63931"
+	},
+	"item": [
+		{
+			"name": "Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function (data) {\r",
+							"  pm.response.to.have.status(200);\r",
+							"  const resultHttp = pm.response.code;\r",
+							"  console.log(\"HTTP\", resultHttp);\r",
+							"  if (parseInt(resultHttp) == 200) {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.environment.set(\"token\", jsonData.data);\r",
+							"  }\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"admin\",\r\n    \"password\": \"password\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/auth/login",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "View All Bots",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "auth",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:3000/bot",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"bot"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Bots",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function (data) {\r",
+							"  pm.response.to.have.status(201);\r",
+							"  const resultHttp = pm.response.code;\r",
+							"  console.log(\"HTTP\", resultHttp);\r",
+							"  if (parseInt(resultHttp) == 201) {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.environment.set(\"botId\", jsonData.data.id);\r",
+							"  }\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "auth",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"botName\": \"myfirstbot\",\r\n    \"botPurpose\": \"myfirstbot\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/bot",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"bot"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get by id",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "auth",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:3000/bot/{{botId}}",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"bot",
+						"{{botId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Patch by Id",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "auth",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"botName\": \"change on bot name\",\r\n    \"botPurpose\": \"change on bot name\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/bot/{{botId}}",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"bot",
+						"{{botId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete by Id",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "auth",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:3000/bot/{{botId}}",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"bot",
+						"{{botId}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
